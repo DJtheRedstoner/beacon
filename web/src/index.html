@@ -59,7 +59,7 @@
 
             document.querySelector(".status").textContent = text;
 
-            const formattedDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeStyle: "short" }).format(new Date(lastbeacon));
+            const formattedDate = new Intl.DateTimeFormat(undefined, { dateStyle: "long", timeStyle: "short" }).format(new Date(lastbeacon));
 
             document.querySelector(".lastbeacon").textContent = `Last beacon: ${formattedDate}`;
         }
