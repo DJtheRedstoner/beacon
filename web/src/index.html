@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beacon</title>
+
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Nimbus Sans L", Roboto, Noto, "Segoe UI", Arial, Helvetica, "Helvetica Neue", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+
+        .container {
+            color: white;
+            background-color: gray;
+            transition: background-color 1s ease;
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 5em;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <p style="margin: 0">Status</p>
+            <h1 class="status">Loading...</h1>
+            <p class="lastbeacon"></p>  
+        </div>
+    </div>
+    <script>
+        async function updateData() {
+            const { lastbeacon } = await fetch("https://beacon.djtheredstoner.workers.dev/").then(it => it.json());
+
+            let text;
+            if (Date.now() - lastbeacon > 10 * 60 * 1000) {
+                text = "Offline";
+                document.querySelector(".container").style["background-color"] = "red";
+            } else {
+                text = "OK";
+                document.querySelector(".container").style["background-color"] = "green";
+            }
+
+            document.querySelector(".status").textContent = text;
+
+            const formattedDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeStyle: "short" }).format(new Date(lastbeacon));
+
+            document.querySelector(".lastbeacon").textContent = `Last beacon: ${formattedDate}`;
+        }
+
+        setInterval(updateData, 30000);
+        updateData();
+    </script>
+</body>
+</html>

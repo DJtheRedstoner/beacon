@@ -1,0 +1,7 @@
+name = "beacon"
+main = "src/index.ts"
+compatibility_date = "2022-12-23"
+
+kv_namespaces = [
+    { binding = "KV", id = "95abcdfd84ca4ab5972b1d60bd214299", preview_id = "95abcdfd84ca4ab5972b1d60bd214299" }
+]
